@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8" />
+ <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ <title>HICOPK&CO</title>
+ <style>
+   /* Reset and Base Styles */
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   }
+
+   html {
+     scroll-behavior: smooth;
+   }
+
+   body {
+     line-height: 1.6;
+     color: #222;
+     background: linear-gradient(135deg, #f0f0f0, #ffffff);
+   }
+
+   /* Navigation Styles */
+   header {
+     background: #000;
+     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+     position: fixed;
+     width: 100%;
+     top: 0;
+     z-index: 1000;
+   }
+
+   .nav-container {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 20px;
+   }
+
+   .logo {
+     font-size: 24px;
+     font-weight: bold;
+     color: #FFD700;
+     text-shadow: 0 0 8px #FFD700, 0 0 12px #FFD700;
+     cursor: pointer;
+     transition: transform 0.3s;
+   }
+
+   .logo:hover {
+     transform: scale(1.05);
+   }
+
+   /* Navigation Links */
+   .nav-links {
+     list-style: none;
+     display: flex;
+     gap: 20px;
+   }
+
+   .nav-links a {
+     text-decoration: none;
+     color: #FFD700;
+     font-weight: 500;
+     transition: color 0.3s, transform 0.2s, text-shadow 0.3s;
+     padding: 8px 12px;
+     border-radius: 4px;
+   }
+
+   .nav-links a:hover {
+     color: #fff;
+     background-color: rgba(255, 215, 0, 0.2);
+     transform: scale(1.05);
+     text-shadow: 0 0 8px #FFD700, 0 0 12px #FFD700;
+   }
+
+   /* Hamburger for small screens */
+   @media(max-width: 768px) {
+     .nav-links {
+       position: absolute;
+       top: 60px;
+       right: 20px;
+       background: rgba(0,0,0,0.9);
+       flex-direction: column;
+       padding: 10px 20px;
+       display: none;
+       border-radius: 8px;
+     }
+     .nav-toggle {
+       display: block;
+       cursor: pointer;
+       font-size: 24px;
+       color: #FFD700;
+     }
+   }
+
+   /* Hero Section - full viewport height, no top margin/padding to remove white space */
+   .hero {
+     height: 100vh; /* full viewport height */
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+     padding: 20px;
+     background: linear-gradient(135deg, #000000 0%, #222 100%);
+     text-align: center;
+     overflow: hidden;
+   }
+
+   .hero h1 {
+     font-size: 48px;
+     margin-bottom: 20px;
+     color: #FFD700;
+     text-shadow: 0 0 12px #FFD700, 0 0 20px #FFD700;
+     opacity: 0;
+     animation: fadeInUp 1s forwards;
+   }
+
+   @keyframes fadeInUp {
+     to {
+       opacity: 1;
+       transform: translateY(0);
+     }
+   }
+
+   .hero p {
+     font-size: 18px;
+     margin-bottom: 30px;
+     color: #EEE;
+     max-width: 800px;
+     opacity: 0;
+     animation: fadeIn 1s forwards 0.2s;
+   }
+
+   @keyframes fadeIn {
+     to {
+       opacity: 1;
+     }
+   }
+
+   /* Buttons with glow effect and hover */
+   .btn {
+     display: inline-block;
+     background: #FFD700;
+     color: #000;
+     padding: 12px 30px;
+     text-decoration: none;
+     border-radius: 5px;
+     font-weight: 600;
+     transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+     opacity: 0;
+     animation: fadeIn 1s forwards 0.6s;
+     box-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700 inset;
+   }
+
+   .btn:hover {
+     background: #FFC107;
+     transform: translateY(-2px);
+     box-shadow: 0 0 20px #FFD700, 0 0 30px #FFC107 inset;
+   }
+
+   /* Sections with fade-in and glow */
+   section {
+     padding: 80px 20px;
+     opacity: 0;
+     transform: translateY(20px);
+     animation: fadeInUp 1s forwards;
+   }
+
+   /* Delays for staggered entrance */
+   #services {
+     animation-delay: 0.3s;
+   }
+   #contact {
+     animation-delay: 0.6s;
+   }
+
+   /* Services styles */
+   .services {
+     max-width: 1200px;
+     margin: 0 auto;
+   }
+
+   .section-title {
+     text-align: center;
+     font-size: 32px;
+     color: #000;
+     margin-bottom: 40px;
+     text-shadow: 0 0 8px #FFD700, 0 0 12px #FFD700;
+   }
+
+   /* Add underline animation to titles */
+   .section-title::after {
+     content: "";
+     display: block;
+     height: 3px;
+     width: 0;
+     background: #FFD700;
+     margin: 10px auto 0;
+     border-radius: 2px;
+     animation: underline 1s forwards;
+   }
+
+   @keyframes underline {
+     to {
+       width: 100px;
+     }
+   }
+
+   .grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+     gap: 30px;
+   }
+
+   .card {
+     background: #fff;
+     padding: 30px;
+     border-radius: 8px;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+     text-align: center;
+     transition: transform 0.3s, box-shadow 0.3s;
+     opacity: 0;
+     transform: translateY(20px);
+     animation: fadeInUp 1s forwards;
+   }
+
+   /* Staggered delay for cards */
+   .card:nth-child(1) { animation-delay: 0.4s; }
+   .card:nth-child(2) { animation-delay: 0.6s; }
+   .card:nth-child(3) { animation-delay: 0.8s; }
+   /* Additional cards can be animated similarly */
+
+   .card:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2), inset 0 0 15px #FFD700;
+   }
+
+   /* Portfolio Styles */
+   .portfolio {
+     padding: 80px 20px;
+     background-color: #f9f9f9;
+   }
+
+   .portfolio h2 {
+     text-align: center;
+     font-size: 32px;
+     margin-bottom: 40px;
+     color: #000;
+     text-shadow: 0 0 8px #FFD700, 0 0 12px #FFD700;
+   }
+
+   .grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+     gap: 30px;
+   }
+
+   .portfolio-item {
+     background: #fff;
+     border-radius: 8px;
+     overflow: hidden;
+     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+     transition: transform 0.3s, box-shadow 0.3s;
+     text-align: center;
+     padding: 15px;
+     opacity: 0;
+     transform: translateY(20px);
+     animation: fadeInUp 1s forwards;
+   }
+
+   .portfolio-item img {
+     width: 100%;
+     height: auto;
+     border-radius: 4px;
+     margin-bottom: 15px;
+     transition: transform 0.3s;
+   }
+
+   .portfolio-item:hover {
+     transform: translateY(-5px);
+     box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+   }
+
+   /* Contact styles */
+   .contact {
+     background: #fff;
+     padding: 80px 20px;
+   }
+
+   .contact h2 {
+     text-align: center;
+     font-size: 28px;
+     margin-bottom: 20px;
+     color: #000;
+     text-shadow: 0 0 8px #FFD700, 0 0 12px #FFD700;
+   }
+
+   .email {
+     text-align: center;
+     font-size: 20px;
+     margin-bottom: 40px;
+     color: #222;
+   }
+
+   /* Footer with glow effect */
+   footer {
+     background: #000;
+     color: #FFD700;
+     text-align: center;
+     padding: 20px;
+     font-size: 14px;
+     text-shadow: 0 0 8px #FFD700, 0 0 12px #FFD700;
+   }
+
+   /* Responsive adjustments */
+   @media(max-width: 768px) {
+     .nav-links {
+       position: absolute;
+       top: 60px;
+       right: 20px;
+       background: rgba(0,0,0,0.9);
+       flex-direction: column;
+       padding: 10px 20px;
+       display: none;
+       border-radius: 8px;
+     }
+     .nav-links.show {
+       display: flex;
+     }
+     .nav-toggle {
+       display: block;
+       cursor: pointer;
+       font-size: 24px;
+       color: #FFD700;
+     }
+     body {
+       padding-top: 120px; /* extra space for mobile nav */
+     }
+   }
+
+   /* Animations for fade-in effects on scroll */
+   @keyframes fadeInUp {
+     from { opacity: 0; transform: translateY(20px); }
+     to { opacity: 1; transform: translateY(0); }
+   }
+
+   @keyframes fadeIn {
+     from { opacity: 0; }
+     to { opacity: 1; }
+   }
+ </style>
+</head>
+<body>
+ <!-- Navigation Header -->
+ <header>
+   <nav class="nav-container" aria-label="Main Navigation">
+     <div class="logo" onclick="scrollToSection('home')">HICOPK&CO</div>
+     <div class="nav-toggle" id="navToggle" aria-label="Toggle Navigation">&#9776;</div>
+     <ul class="nav-links" role="navigation" id="navLinks">
+       <li><a href="#home" onclick="scrollToSection('home')">Home</a></li>
+       <li><a href="#services" onclick="scrollToSection('services')">Services</a></li>
+       <li><a href="#portfolio" onclick="scrollToSection('portfolio')">Portfolio</a></li>
+       <li><a href="#contact" onclick="scrollToSection('contact')">Contact</a></li>
+     </ul>
+   </nav>
+ </header>
+
+ <!-- Hero Showcase: full viewport height, no top margin to eliminate white space -->
+ <section id="home" class="hero" aria-labelledby="hero-heading">
+   <h1 id="hero-heading">Build Your Digital Presence</h1>
+   <p>A clean, minimal, and fully customizable design built using semantic HTML5 structures and flexible CSS layout properties.</p>
+   <a href="#contact" class="btn">Get Started</a>
+ </section>
+
+ <!-- Services Section -->
+ <section id="services" class="services" aria-labelledby="services-heading">
+   <h2 id="services-heading" class="section-title">Our Key Services</h2>
+   <div class="grid">
+     <div class="card">
+       <h3>Web Design : 1-10000$ depending on the time and site size</h3>
+       <p>Creating highly interactive, beautiful, and fluid mobile-first layouts designed to capture attention.</p>
+     </div>
+     <div class="card">
+       <h3>Development : 1-10000$ depending on the time and site size</h3>
+       <p>Writing highly accessible, search-engine-optimized code following up-to-date modern web standards.</p>
+     </div>
+     <div class="card">
+       <h3>Marketing : 2-50$</h3>
+       <p>Scaling targeted campaigns to amplify organic consumer growth and build meaningful online visibility.</p>
+     </div>
+     <div class="card">
+       <h3>How to build your own proxy FULL PROXY 1-on-1 calls to do it : 10$</h3>
+       <p>Making your school day less boring.</p>
+     </div>
+     <div class="card">
+       <h3>How to build your own WEBSITE FULL WEBSITE 1-on-1 calls to do it : 10-100$ depending on time and site size</h3>
+       <p>Helping you create your own website.</p>
+     </div>
+     <div class="card">
+       <h3>How to code HTML, CSS, and JS 1-on-1 calls to do it : free if you join discord</h3>
+       <p>Assisting you in coding effectively.</p>
+     </div>
+     <div class="card">
+       <h3>25 proxy links : 5$</h3>
+       <p>Also making your school day less boring.</p>
+     </div>
+     <div class="card">
+       <h3>10 proxy links : 2$</h3>
+       <p>Also making your school day less boring.</p>
+     </div>
+     <div class="card">
+       <h3>1 proxy link : free, just email me</h3>
+       <p>Also making your school day less boring.</p>
+     </div>
+   </div>
+ </section>
+
+ <!-- Portfolio Section with Images -->
+ <section id="portfolio" class="portfolio" aria-labelledby="portfolio-heading">
+   <h2 id="portfolio-heading" class="section-title">Our Portfolio</h2>
+   <div class="grid">
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 1" />
+       <h3>Modern Web Design</h3>
+       <p>A sleek, modern website design for a tech startup.</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 2" />
+       <h3>Creative Branding</h3>
+       <p>Branding and logo design for a creative agency.</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 3" />
+       <h3>Mobile games</h3>
+       <p>UI design for a fitness mobile application.</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 4" />
+       <h3>TCRACK</h3>
+       <p>the old TCRACK</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 5" />
+       <h3>THE BEST</h3>
+       <p>the newer TCRACK</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 6" />
+       <h3>101001</h3>
+       <p>the newest TCRACK</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 7" />
+       <h3>pluto PROXY</h3>
+       <p>just a proxy.</p>
+     </div>
+     <div class="portfolio-item">
+       <img src="https://images.unsplash.com/photo-1549924231-f129b911e442?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Project 8" />
+       <h3>pluto proxy v2</h3>
+       <p>just a better proxy.</p>
+     </div>
+     <!-- Additional portfolio items -->
+   </div>
+ </section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact" aria-labelledby="contact-heading">
+ <h2 id="contact-heading">Reach Out To Us</h2>
+ <div class="email">
+   at: <a href="mailto:hicopkandco22@gmail.com" target="_blank" rel="noopener noreferrer">hicopkandco22@gmail.com</a>
+ </div>
+ <div class="email">
+   at: <a href="" target="_blank" rel="noopener noreferrer">discord</a>
+ </div>
+<div class="email">
+ <a href="tel:8382189685">Call Us: 838-218-9685</a>
+</div>
+</section>
+
+ <!-- Footer -->
+ <footer>
+   <p>&copy; 2026 HICOPK&CO. All rights reserved.</p>
+ </footer>
+
+ <!-- JavaScript for mobile menu toggle and smooth scroll -->
+ <script>
+   const navToggle = document.getElementById('navToggle');
+   const navLinks = document.getElementById('navLinks');
+
+   navToggle.addEventListener('click', () => {
+     navLinks.classList.toggle('show');
+   });
+
+   // Optional: close menu when clicking outside
+   document.addEventListener('click', (e) => {
+     if (!navLinks.contains(e.target) && !navToggle.contains(e.target)) {
+       navLinks.classList.remove('show');
+     }
+   });
+
+   // Smooth scroll function
+   function scrollToSection(id) {
+     document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+     // Close menu on mobile
+     if (navLinks.classList.contains('show')) {
+       navLinks.classList.remove('show');
+     }
+   }
+ </script>
+</body>
+</html>
+
